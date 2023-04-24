@@ -24,6 +24,13 @@ export default {
       axios.get(this.store.apiUrlFilm).then(resp => {
         this.store.listFilm = resp.data.results; 
       })
+    },
+    getSeries() {
+      this.store.apiUrlSeries += `&query=${this.store.filter}`;
+
+      axios.get(this.store.apiUrlSeries).then(resp => {
+        this.store.listSerie = resp.data.results;
+      })
     }
   }
 }
