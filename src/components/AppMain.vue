@@ -8,6 +8,11 @@ export default {
             store
         }
     },
+    methods: {
+        getPoster(poster) {
+            return new URL (poster, import.meta.url).href;
+        }
+    },
     computed: {
         getFlags() {
               return function(language) {
@@ -19,7 +24,6 @@ export default {
                 };
                 return flags[language];
               };
-
         }
     }
 }
@@ -31,14 +35,21 @@ export default {
     <div class="container-cards" v-for="(content, index) in this.store.listFilm">
         <div class="card">
             <span>
-                <img src="" alt="">
+                <img v-if="content.poster_path" :src="getPoster(`${store.posterURL}${content.poster_path}`)" alt="poster">
+                <img v-else src="../assets/image-not.jpg" alt="image-not-found">
             </span>
             <div class="content">
-                <h3>{{ content.name }}</h3>
+                <h3>{{ content.title}}</h3>
                 <h3>{{ content.original_title }}</h3>
                 <img v-if="getFlags(content.original_language)" :src="getFlags(content.original_language)" alt="flags-language">
                 <h3 v-else> {{ content.original_language }}</h3>
-                <h4>{{ content.vote_average }}</h4>
+                <h4>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </h4>
             </div>
         </div>
     </div>
@@ -46,14 +57,21 @@ export default {
     <div class="container-cards" v-for="(content, index) in this.store.listSeries">
         <div class="card">
             <span>
-                <img src="" alt="">
+                <img v-if="content.poster_path" :src="getPoster(`${store.posterURL}${content.poster_path}`)" alt="poster">
+                <img v-else src="../assets/image-not.jpg" alt="image-not-found">
             </span>
             <div class="content">
                 <h3>{{ content.name }}</h3>
                 <h3>{{ content.original_name}}</h3>
-                <img v-if="getFlags(content.original_language)" :src="getFlags(content.original_language)" alt="flags-language">
+                <img class="flags" v-if="getFlags(content.original_language)" :src="getFlags(content.original_language)" alt="flags-language">
                 <h3 v-else> {{ content.original_language }}</h3>
-                <h4>{{ content.vote_average }}</h4>
+                <h4>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </h4>
             </div>
         </div>
     </div>
@@ -66,7 +84,7 @@ export default {
     flex-wrap: wrap;
 }
 
-img {
+.flags {
     width: 20px;
 }
 </style>
